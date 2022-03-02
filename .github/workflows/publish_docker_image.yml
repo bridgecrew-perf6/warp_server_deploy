@@ -11,7 +11,7 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v2
       - name: Build image
-        run: docker build -tp 8000:8000 rust_app_deploy_demo .
+        run: docker build -t rust_app_deploy_demo .
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
