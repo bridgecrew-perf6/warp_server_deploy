@@ -19,6 +19,6 @@ jobs:
       - name: Log in to DO Container Registry
         run: doctl registry login --expiry-seconds 600
       - name: Tag image
-        run: docker tag rust_app_deploy_demo registry.digitalocean.com/darren25/rust_app_deploy_demo:${{CI_COMMIT_SHA:0:8}}
+        run: docker tag rust_app_deploy_demo registry.digitalocean.com/darren25/rust_app_deploy_demo:${{CI_COMMIT_SHORT_SHA}}
       - name: Push image to DO Container Registry
-        run: docker push registry.digitalocean.com/darren25/rust_app_deploy_demo:${{CI_COMMIT_SHA:0:8}}
+        run: docker push registry.digitalocean.com/darren25/rust_app_deploy_demo:${{CI_COMMIT_SHORT_SHA}}
