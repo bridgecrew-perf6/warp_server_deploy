@@ -1,12 +1,22 @@
-FROM rust:latest as builder
+FROM rust:latest as chef
 
+RUN cargo install cargo-chef 
 WORKDIR /app
+
+FROM chef as planner
+
 COPY . .
+RUN cargo chef prepare  --recipe-path recipe.json
 
-RUN cargo build --release
+FROM chef as builder
 
-FROM debian:buster-slim
+COPY --from=planner /app/recipe.json recipe.json
+RUN cargo chef cook --release --recipe-path recipe.json
+COPY . .
+RUN cargo build --release --bin app
 
-COPY --from=builder /app/target/release/warp_server_deploy /warp_server_deploy
+FROM debian:buster-slim as runtime
 
-CMD ["/warp_server_deploy"]
+COPY --from=builder /app/target/release/app /usr/local/bin
+
+ENTRYPOINT ["/usr/local/bin/app"]
