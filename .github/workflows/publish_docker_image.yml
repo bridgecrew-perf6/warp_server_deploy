@@ -16,9 +16,6 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
-      - name: Get Commit Sha
-        run:  commit=$(git rev-parse HEAD)
-    git_commit=${commit::8}
       - name: Log in to DO Container Registry
         run: doctl registry login --expiry-seconds 600
       - name: Tag image
