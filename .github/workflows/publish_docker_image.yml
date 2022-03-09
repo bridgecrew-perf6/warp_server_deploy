@@ -24,3 +24,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/rust_auto_deploy_test:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/rust_auto_deploy_test:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/rust_auto_deploy_test:buildcache,mode=max
